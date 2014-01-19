@@ -1,0 +1,27 @@
+--- # aws-tieredapp-no-elb
+summary: Three-tiered, bare web application environment
+description: >
+  This simple example creates a "virtual datacenter rack," a VPC with 
+  three subnetson EC2, and a S3 bucket and RDS database for shared storage, 
+  using CloudFormation. Management of instances is expected to be done manually
+  or using a another cloudformation template that references networks and
+  objects created by this template.
+provider: aws
+parameters:
+  AWSRegion: us-east-1
+  AZ1: us-east-1a
+  AZ2: us-east-1b
+  DBName: database
+  DBUsername: dbuser
+  DBPassword: changeme
+  DBEngine: MySQL
+  DBEngineLicenseModel: general-public-license
+  DBEngineVersion: 5.5
+  DBClass: db.m1.small
+  DBAllocatedStorage: 10
+  MultiAZDatabase: "false"
+  SESSMTP: "false"
+  SESEndpoint: email-smtp.us-east-1.amazonaws.com
+  SESPort: 25
+  SESUsername: NEPHO_CHANGEME_USERNAME
+  SESPassword: NEPHO_CHANGEME_PASSWORD
