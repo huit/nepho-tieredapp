@@ -1,7 +1,7 @@
-nepho-example
+nepho-tieredapp
 =============
 
-This is an example cloudlet for [nepho](http://github.com/huit/nepho) that demonstrates key concepts and structure.
+This is an example cloudlet for [nepho](http://github.com/huit/nepho) that demonstrates the structure of a multi-teired application environment.
 
 Key Concepts
 ------------
