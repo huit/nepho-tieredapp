@@ -1,0 +1,56 @@
+{% import 'Parameters/Instance-Parameters.json' as inst_params %}
+{% import 'Resources/Host.json'                 as host    with context %}
+{% import 'Resources/Network-Tier.json'         as network with context %}
+{% import 'Resources/RDS.json'                  as rds     with context %}
+{% import 'Resources/S3-Bucket.json'            as bucket  with context %}
+{% import 'Resources/Wait-Objects.json'         as wait    with context %}
+{% import 'Outputs/RDS.json'                    as rds_out with context %}
+{% import 'Outputs/S3-Bucket.json'              as s3_out  with context %}
+
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "Three-tiered VPC Deployment",
+
+  "Parameters" : {
+    {% include 'Parameters/General-Instance-Parameters.json' %},
+    {% include 'Parameters/AZ-Parameters.json' %},
+    {% include 'Parameters/RDS-Parameters.json' %},
+    {% include 'Parameters/SES-Parameters.json' %},
+    {% include 'Parameters/NAT-Instance-Parameters.json' %}
+  },
+
+  "Mappings" : {
+    {% include 'Mappings/AWS-Instance-Mappings.json' %},
+    {% include 'Mappings/AWS-NAT-Instance-Mappings.json' %},
+    {% include 'Mappings/Subnet-Mappings.json' %}
+  },
+
+  "Resources" : {
+    {% include 'Resources/VPC.json' %},
+
+    {% include 'Resources/NAT.json' %},
+    {% include 'Resources/BastionHost.json' %},
+
+    {{ bucket.bucket(name='Persistence') }},
+
+    {{ network.public_network( name="Public",  avail_zone='{"Ref":"AZ1"}', subnet_space="PublicA") }},
+    {{ network.private_network(name="Private", avail_zone='{"Ref":"AZ1"}', subnet_space="PrivateTier1A", nat_device='NATDevice') }},
+    {{ network.private_network(name="DataA",   avail_zone='{"Ref":"AZ1"}', subnet_space="DataA", nat_device='NATDevice') }},
+    {{ network.private_network(name="DataB",   avail_zone='{"Ref":"AZ2"}', subnet_space="DataB", nat_device='NATDevice') }},
+
+
+    {{ rds.rds(name='Persistence',
+               subnet1='DataASubnet',
+               subnet2='DataBSubnet',
+               db_access_range='0.0.0.0/24') }}
+  },
+
+  "Outputs" : {
+    {% include 'Outputs/BastionHost.json' %},
+    {{ rds_out.oracle(name="Persistence") }},
+    {{ s3_out.bucket(name="PersistenceS3Bucket") }}
+
+  }
+}
+{# vim: set ft=jinja ts=4 sw=2 tw=0 foldmethod=syntax :#}
