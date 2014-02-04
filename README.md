@@ -1,7 +1,7 @@
 nepho-tieredapp
 =============
 
-This is an example cloudlet for [nepho](http://github.com/huit/nepho) that demonstrates the structure of a multi-teired application environment.
+This is a cloudlet for [nepho](http://github.com/huit/nepho) that provisions a multi-tiered web application environment.
 
 Key Concepts
 ------------
