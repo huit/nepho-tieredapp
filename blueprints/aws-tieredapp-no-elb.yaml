@@ -11,9 +11,6 @@ parameters:
   AWSRegion: us-east-1
   AZ1: us-east-1a
   AZ2: us-east-1b
-  DBName: database
-  DBUsername: dbuser
-  DBPassword: changeme
   DBEngine: MySQL
   DBEngineLicenseModel: general-public-license
   DBEngineVersion: 5.5

@@ -11,3 +11,7 @@ description: >
   stack, the middle tier is for "stateful" components, and the back tier
   provides a persistence layer via RDS and S3.
 projectpage: http://github.com/huit/nepho-tieredapp
+parameters:
+  DBName: exampledb
+  DBUsername: dbuser
+  DBPassword: changeme
